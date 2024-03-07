@@ -1,6 +1,7 @@
 package com.mbapps.forum.sardorfullstackforum.controller;
 
 import com.mbapps.forum.sardorfullstackforum.model.connection.ForumPostDTO;
+import com.mbapps.forum.sardorfullstackforum.model.db.ForumCommentModel;
 import com.mbapps.forum.sardorfullstackforum.repo.ForumCommentRepository;
 import com.mbapps.forum.sardorfullstackforum.service.ForumPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/post")
 public class ForumPostController {
     @Autowired
@@ -27,7 +29,12 @@ public class ForumPostController {
         return new ResponseEntity<>(forumPostService.createNewPost(post), HttpStatus.CREATED);
     }
     @DeleteMapping("/delete/{postId}")
-    public ResponseEntity deletePost(@PathVariable("postId") Long postId) {
+    public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId) {
         return forumPostService.deletePostById(postId);
+//        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<List<ForumCommentModel>> getForumIdComments(@PathVariable("postId") Integer postId) {
+        return ResponseEntity.ok(forumPostService.getComments(postId));
     }
 }

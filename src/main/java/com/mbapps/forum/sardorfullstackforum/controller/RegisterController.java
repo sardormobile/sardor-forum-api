@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin//for connect angular in localhost
-@RequestMapping("/api")//api/v1
+@RequestMapping("/register")//api/v1
 public class RegisterController {
 
     @Autowired

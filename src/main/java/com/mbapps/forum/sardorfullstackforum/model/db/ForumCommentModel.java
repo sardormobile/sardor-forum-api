@@ -1,6 +1,8 @@
 package com.mbapps.forum.sardorfullstackforum.model.db;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "ForumComment")
@@ -9,10 +11,13 @@ public class ForumCommentModel {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer commentId;
-    @ManyToOne
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postIdFk", referencedColumnName = "postId", nullable = false)
     private ForumPostModel postId;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdFk", referencedColumnName = "userId", nullable = false)
     private UserModel userId;
     @Column

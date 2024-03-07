@@ -1,6 +1,9 @@
 package com.mbapps.forum.sardorfullstackforum.model.db;
 
+//import com.mbapps.forum.sardorfullstackforum.model.auth.Token;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "ForumUser")
@@ -20,8 +23,9 @@ public class UserModel {
     @Transient
     private String confirmPassword;
 
-    public UserModel() {
-    }
+//    @OneToMany(mappedBy = "user")
+//    private List<Token> tokens;
+    public UserModel() {}
 
     public Integer getUserId() {
         return userId;

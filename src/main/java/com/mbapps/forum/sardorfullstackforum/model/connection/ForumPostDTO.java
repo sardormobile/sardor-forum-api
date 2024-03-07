@@ -12,6 +12,8 @@ public class ForumPostDTO {
     private String message;
     private String createdDate;
 
+    private Integer commentsCount;
+
     public Integer getPostId() {
         return postId;
     }
@@ -42,5 +44,13 @@ public class ForumPostDTO {
 
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Integer getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(Integer commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }
