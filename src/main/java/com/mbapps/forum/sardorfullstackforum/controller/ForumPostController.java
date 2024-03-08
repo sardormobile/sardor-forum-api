@@ -4,6 +4,7 @@ import com.mbapps.forum.sardorfullstackforum.model.connection.ForumPostDTO;
 import com.mbapps.forum.sardorfullstackforum.model.db.ForumCommentModel;
 import com.mbapps.forum.sardorfullstackforum.repo.ForumCommentRepository;
 import com.mbapps.forum.sardorfullstackforum.service.ForumPostService;
+import com.mbapps.forum.sardorfullstackforum.service.impl.ForumPostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class ForumPostController {
     ForumPostService forumPostService;
     @Autowired
     ForumCommentRepository forumCommentRepository;
+
     @GetMapping("/all")
     public ResponseEntity<List<ForumPostDTO>> getAllPosts() {
         return ResponseEntity.ok(forumPostService.getAllPosts());

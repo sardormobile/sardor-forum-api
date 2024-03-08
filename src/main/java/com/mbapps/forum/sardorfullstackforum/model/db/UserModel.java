@@ -2,12 +2,15 @@ package com.mbapps.forum.sardorfullstackforum.model.db;
 
 //import com.mbapps.forum.sardorfullstackforum.model.auth.Token;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "ForumUser")
-public class UserModel {
+public class UserModel implements UserDetails {
     @Id
     @Column(name = "userId")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +23,6 @@ public class UserModel {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Transient
-    private String confirmPassword;
 
 //    @OneToMany(mappedBy = "user")
 //    private List<Token> tokens;
@@ -67,12 +68,30 @@ public class UserModel {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
 }
 

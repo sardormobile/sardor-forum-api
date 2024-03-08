@@ -1,6 +1,6 @@
 package com.mbapps.forum.sardorfullstackforum.filters;//package com.mbapps.forum.sardorfullstackforum.filters;
 
-//import com.mbapps.forum.sardorfullstackforum.service.JwtService;
+//import com.mbapps.forum.sardorfullstackforum.service.jwt.JwtService;
 //import com.mbapps.forum.sardorfullstackforum.service.UserDetailsServiceImp;
 //import jakarta.servlet.FilterChain;
 //import jakarta.servlet.ServletException;

@@ -4,21 +4,20 @@ import com.mbapps.forum.sardorfullstackforum.model.db.UserModel;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Token")
 public class Token {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Integer tokenId;
 
     private String token;
-//    @Enumerated(EnumType.STRING)
-//    private TokenType tokenType;
 
-    private boolean experient;
+    private boolean experience;
 
     private boolean revoke;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private UserModel user;
 
 }
