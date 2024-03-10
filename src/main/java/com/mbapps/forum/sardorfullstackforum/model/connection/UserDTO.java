@@ -10,6 +10,8 @@ public class UserDTO {
 
     private String username;
 
+    private String token;
+
     public UserDTO() {}
 
     public Integer getUserId() {
@@ -44,5 +46,12 @@ public class UserDTO {
         this.username = username;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }
 

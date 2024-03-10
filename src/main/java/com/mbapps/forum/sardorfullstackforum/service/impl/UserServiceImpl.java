@@ -1,6 +1,6 @@
 package com.mbapps.forum.sardorfullstackforum.service.impl;
 
-import com.mbapps.forum.sardorfullstackforum.model.auth.TokenModel;
+import com.mbapps.forum.sardorfullstackforum.model.connection.LogInDTO;
 import com.mbapps.forum.sardorfullstackforum.model.connection.UserDTO;
 import com.mbapps.forum.sardorfullstackforum.model.converter.UserConverter;
 import com.mbapps.forum.sardorfullstackforum.model.db.UserModel;
@@ -11,15 +11,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,6 +29,7 @@ public class UserServiceImpl implements UserService {
     AuthenticationProvider authenticationProvider;
 //    AuthenticationManager authenticationManager;
 
+    @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
     JwtService jwtService;
@@ -42,36 +40,57 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByUsername(user.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body("Error: Username is already taken!");
+                    .body("Error: Username already registered!");
         }
         UserModel newUser = new UserModel();
         BeanUtils.copyProperties(user, newUser);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        //save
-        UserModel savedUser = userRepository.save(newUser);
 
-        return new ResponseEntity<>(userConverter.toUserDTO(savedUser), HttpStatus.CREATED);
-    }
-
-    @Override
-    public TokenModel logIn(UserModel user) {// logIn
-        authenticationProvider.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
-
-        UserModel userDetails= userRepository.findByUsername(user.getUsername()).orElseThrow();
         String token = null;
         try {
-            token = jwtService.generateJwt(userDetails.getUsername());
+            token = jwtService.generateJwt(user.getUsername());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        return new TokenModel(
-                token,
-                userDetails.getUserId(),
-                userDetails.getUsername()
-        );
-//        return userConverter.toUserDTO(result.get());
+        //save
+        UserModel savedUser = userRepository.save(newUser);
+        UserDTO resUserDto = userConverter.toUserDTO(savedUser);
+        resUserDto.setToken(token);
+        return new ResponseEntity<>(resUserDto, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<?> logIn(LogInDTO user) {// logIn
+        try {
+            UserModel userDetails = userRepository.findByUsername(user.getUsername()).orElseThrow();
+
+            if (!passwordEncoder.matches(user.getPassword(), userDetails.getPassword())) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
+            }
+
+            String token = jwtService.generateJwt(userDetails.getUsername());
+            UserDTO newUserDTO = userConverter.toUserDTO(userDetails);
+            newUserDTO.setToken(token);
+
+//            return ResponseEntity.status(HttpStatus.OK).body(newUserDTO);
+            return ResponseEntity.ok(newUserDTO);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> getUserByUsername(String username) {
+        try {
+
+            UserModel getUserData = userRepository.findByUsername(username).orElseThrow();
+            return ResponseEntity.ok(userConverter.toUserDTO(getUserData));
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 
     @Override
