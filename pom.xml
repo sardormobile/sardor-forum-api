@@ -32,7 +32,6 @@
 		</dependency>
 
 		<!-- h2-database -->
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -51,66 +50,19 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
-		<!--validation-->
+		<!--Validation-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-
-		<!--lombok-->
-<!--		<dependency>-->
-<!--			<groupId>org.projectlombok</groupId>-->
-<!--			<artifactId>lombok</artifactId>-->
-<!--			<optional>true</optional>-->
-<!--		</dependency>-->
-
-		<!-- Spring Security -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
-
-		<!-- JWT Library -->
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
-<!--		<dependency>-->
-<!--			<groupId>io.jsonwebtoken</groupId>-->
-<!--			<artifactId>jjwt-api</artifactId>-->
-<!--			<version>0.12.5</version>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>io.jsonwebtoken</groupId>-->
-<!--			<artifactId>jjwt-impl</artifactId>-->
-<!--			<version>0.12.5</version>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>io.jsonwebtoken</groupId>-->
-<!--			<artifactId>jjwt-jackson</artifactId>-->
-<!--			<version>0.12.5</version>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
-
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-mail</artifactId>-->
-<!--		</dependency>-->
+		<!--Spring Security-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>dev.samstevens.totp</groupId>-->
-<!--			<artifactId>totp</artifactId>-->
-<!--			<version>1.7.1</version>-->
-<!--		</dependency>-->
+
+		<!--jsonwebtoken-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -128,6 +80,7 @@
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
+
 		<!--Spring Boot Test-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

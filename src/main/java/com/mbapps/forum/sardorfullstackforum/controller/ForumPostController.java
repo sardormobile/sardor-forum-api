@@ -36,7 +36,7 @@ public class ForumPostController {
 //        return ResponseEntity.noContent().build();
     }
     @GetMapping("/{postId}/comments")
-    public ResponseEntity<List<ForumCommentModel>> getForumIdComments(@PathVariable("postId") Integer postId) {
+    public ResponseEntity<List<ForumCommentModel>> getCommentsByPostId(@PathVariable("postId") Integer postId) {
         return ResponseEntity.ok(forumPostService.getComments(postId));
     }
 }
