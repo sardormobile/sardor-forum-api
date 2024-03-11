@@ -32,8 +32,8 @@ public class ForumPostController {
     }
     @DeleteMapping("/delete/{postId}")
     public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId) {
-        return forumPostService.deletePostById(postId);
-//        return ResponseEntity.noContent().build();
+        forumPostService.deletePostById(postId);
+        return ResponseEntity.noContent().build();
     }
     @GetMapping("/{postId}/comments")
     public ResponseEntity<List<ForumCommentModel>> getCommentsByPostId(@PathVariable("postId") Integer postId) {
