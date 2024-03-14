@@ -30,13 +30,18 @@ public class ForumPostServiceImpl implements ForumPostService {
 
     @Override
     public List<ForumPostDTO> getAllPosts() {
-        List<ForumPostModel> allPosts = forumPostRepository.findAll();
+        List<ForumPostModel> posts = forumPostRepository.findAll();
 
-        return allPosts.stream()
-                .map(forumPostConverter::toForumPostDTO)
+        return posts.stream()
+                .map(this::mapToForumPostDTO)
                 .collect(Collectors.toList());
     }
-
+    private ForumPostDTO mapToForumPostDTO(ForumPostModel post) {
+        ForumPostDTO dto = forumPostConverter.toForumPostDTO(post);
+        dto.setUsername(post.getUserId().getUsername());
+        dto.setFirstName(post.getUserId().getFirstName());
+        return dto;
+    }
     @Override
     public ForumPostDTO createNewPost(ForumPostDTO post) {
         ForumPostModel convertResult = forumPostConverter.toForumPostEntity(post);

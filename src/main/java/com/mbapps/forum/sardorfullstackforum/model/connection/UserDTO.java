@@ -1,8 +1,12 @@
 package com.mbapps.forum.sardorfullstackforum.model.connection;
 
 
+import com.mbapps.forum.sardorfullstackforum.enums.Role;
+
 public class UserDTO {
     private Integer userId;
+
+    private Role role;
 
     private String firstName;
 
@@ -12,14 +16,20 @@ public class UserDTO {
 
     private String token;
 
-    public UserDTO() {}
-
     public Integer getUserId() {
         return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getFirstName() {

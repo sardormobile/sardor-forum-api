@@ -1,5 +1,6 @@
 package com.mbapps.forum.sardorfullstackforum.service.impl;
 
+import com.mbapps.forum.sardorfullstackforum.enums.Role;
 import com.mbapps.forum.sardorfullstackforum.model.connection.LogInDTO;
 import com.mbapps.forum.sardorfullstackforum.model.connection.UserDTO;
 import com.mbapps.forum.sardorfullstackforum.model.converter.UserConverter;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,16 +48,19 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, newUser);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        if (user.getRole() != Role.ADMIN) {
+            newUser.setRole(Role.USER);
+        }
         String token = null;
         try {
             token = jwtService.generateJwt(user.getUsername());
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+        newUser.setToken(token);
         //save
         UserModel savedUser = userRepository.save(newUser);
         UserDTO resUserDto = userConverter.toUserDTO(savedUser);
-        resUserDto.setToken(token);
         return new ResponseEntity<>(resUserDto, HttpStatus.CREATED);
     }
 
@@ -67,11 +72,9 @@ public class UserServiceImpl implements UserService {
             if (!passwordEncoder.matches(user.getPassword(), userDetails.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
             }
-
             String token = jwtService.generateJwt(userDetails.getUsername());
             UserDTO newUserDTO = userConverter.toUserDTO(userDetails);
             newUserDTO.setToken(token);
-
 //            return ResponseEntity.status(HttpStatus.OK).body(newUserDTO);
             return ResponseEntity.ok(newUserDTO);
         } catch (NoSuchElementException e) {
@@ -84,7 +87,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> getUserByUsername(String username) {
         try {
-
             UserModel getUserData = userRepository.findByUsername(username).orElseThrow();
             return ResponseEntity.ok(userConverter.toUserDTO(getUserData));
 
@@ -96,11 +98,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {  // get all users
         List<UserModel> users = userRepository.findAll();
-        List<UserDTO> newUserList = new ArrayList<>();
-        for (UserModel user : users) {
-            newUserList.add(userConverter.toUserDTO(user));
-        }
-        return newUserList;
+        return users.stream()
+                .map(this.userConverter::toUserDTO)
+                .collect(Collectors.toList());
     }
 
 }

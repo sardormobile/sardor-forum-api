@@ -16,4 +16,6 @@ public interface ForumPostRepository extends JpaRepository<ForumPostModel, Integ
 
 //    @Transactional
 //    void deleteByCommitId(Integer postId);
+
+    List<ForumPostModel> findByUserId_UserId(Integer userId);
 }

@@ -27,6 +27,9 @@ public class ForumCommentConverter {
         dto.setCommentId(model.getCommentId());
         dto.setPostId(model.getPostId().getPostId());
         dto.setUserId(model.getUserId().getUserId());
+        dto.setRole(model.getUserId().getRole());
+        dto.setFirstName(model.getUserId().getFirstName());
+        dto.setUsername(model.getUserId().getUsername());
         dto.setComment(model.getMessage());
         dto.setCreatedDate(model.getCreatedDate());
         return dto;

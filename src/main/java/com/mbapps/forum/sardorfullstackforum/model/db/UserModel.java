@@ -1,6 +1,7 @@
 package com.mbapps.forum.sardorfullstackforum.model.db;
 
 //import com.mbapps.forum.sardorfullstackforum.model.auth.Token;
+import com.mbapps.forum.sardorfullstackforum.enums.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,9 +24,9 @@ public class UserModel implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Token> tokens;
+    private String token;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
     public UserModel() {}
 
     public Integer getUserId() {
@@ -66,6 +67,22 @@ public class UserModel implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

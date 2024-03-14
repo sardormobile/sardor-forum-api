@@ -1,5 +1,6 @@
 package com.mbapps.forum.sardorfullstackforum.model.connection;
 
+import com.mbapps.forum.sardorfullstackforum.enums.Role;
 import jakarta.validation.constraints.NotNull;
 
 public class ForumCommentDTO {
@@ -8,9 +9,11 @@ public class ForumCommentDTO {
     private Integer postId;
     @NotNull
     private Integer userId;
+    private Role role;
+    private String firstName;
+    private String username;
     @NotNull
     private String comment;
-
     private String createdDate;
 
     public Integer getCommentId() {
@@ -35,6 +38,30 @@ public class ForumCommentDTO {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getComment() {
