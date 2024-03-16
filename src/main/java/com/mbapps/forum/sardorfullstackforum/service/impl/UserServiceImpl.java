@@ -8,6 +8,8 @@ import com.mbapps.forum.sardorfullstackforum.model.db.UserModel;
 import com.mbapps.forum.sardorfullstackforum.repo.UserRepository;
 import com.mbapps.forum.sardorfullstackforum.service.UserService;
 import com.mbapps.forum.sardorfullstackforum.service.jwt.JwtService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,20 +23,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserConverter userConverter;
-    @Autowired
-    UserRepository userRepository;
+    private final UserConverter userConverter;
 
-    AuthenticationProvider authenticationProvider;
-//    AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
-    JwtService jwtService;
+//    private final AuthenticationProvider authenticationProvider;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
 
     @Override
     public ResponseEntity<?> signUp(UserModel user) { // signUp, new user
@@ -59,15 +59,19 @@ public class UserServiceImpl implements UserService {
         }
         newUser.setToken(token);
         //save
-        UserModel savedUser = userRepository.save(newUser);
-        UserDTO resUserDto = userConverter.toUserDTO(savedUser);
+        int savedUser = userRepository.save(newUser);
+        System.out.println("savedUser: " + savedUser);
+        UserDTO resUserDto = userConverter.toUserDTO(newUser);
+        if (savedUser == 1) {
+            resUserDto.setStatus(true);
+        }
         return new ResponseEntity<>(resUserDto, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<?> logIn(LogInDTO user) {// logIn
         try {
-            UserModel userDetails = userRepository.findByUsername(user.getUsername()).orElseThrow();
+            UserModel userDetails = userRepository.findByUsername(user.getUsername());
 
             if (!passwordEncoder.matches(user.getPassword(), userDetails.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
@@ -75,7 +79,6 @@ public class UserServiceImpl implements UserService {
             String token = jwtService.generateJwt(userDetails.getUsername());
             UserDTO newUserDTO = userConverter.toUserDTO(userDetails);
             newUserDTO.setToken(token);
-//            return ResponseEntity.status(HttpStatus.OK).body(newUserDTO);
             return ResponseEntity.ok(newUserDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -87,9 +90,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> getUserByUsername(String username) {
         try {
-            UserModel getUserData = userRepository.findByUsername(username).orElseThrow();
-            return ResponseEntity.ok(userConverter.toUserDTO(getUserData));
-
+            UserModel getUserData = userRepository.findByUsername(username);
+            if (getUserData != null) {
+                UserDTO userDTO = userConverter.toUserDTO(getUserData);
+                userDTO.setStatus(true);
+                return ResponseEntity.ok(userDTO);
+            }
+            return ResponseEntity.ok(getUserData);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }

@@ -4,6 +4,7 @@ import com.mbapps.forum.sardorfullstackforum.model.connection.LogInDTO;
 import com.mbapps.forum.sardorfullstackforum.model.connection.UserDTO;
 import com.mbapps.forum.sardorfullstackforum.model.db.UserModel;
 import com.mbapps.forum.sardorfullstackforum.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,12 +14,12 @@ import java.util.List;
 
 
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")//for connection with angular in localhost
 @RequestMapping("/register")//api/v1
 public class AuthController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers() {

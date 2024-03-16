@@ -2,6 +2,7 @@ package com.mbapps.forum.sardorfullstackforum.controller;
 
 import com.mbapps.forum.sardorfullstackforum.model.connection.ForumCommentDTO;
 import com.mbapps.forum.sardorfullstackforum.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,11 @@ import java.util.List;
 
 @RestController
 //@CrossOrigin
+@RequiredArgsConstructor
 @RequestMapping("/comment")
 public class ForumCommentController {
-    @Autowired
-    CommentService commentService;
+
+    private final CommentService commentService;
     @GetMapping("/all")
     public ResponseEntity<List<ForumCommentDTO>> getAllComments() {
         return ResponseEntity.ok(commentService.getAllComments());

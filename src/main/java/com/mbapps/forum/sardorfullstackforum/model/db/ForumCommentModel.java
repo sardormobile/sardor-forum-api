@@ -1,68 +1,24 @@
 package com.mbapps.forum.sardorfullstackforum.model.db;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-@Entity
-@Table(name = "ForumComment")
+import lombok.*;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+//@Table(name = "ForumComment")
 public class ForumCommentModel {
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Integer commentId;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postIdFk", referencedColumnName = "postId", nullable = false)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "postIdFk", referencedColumnName = "postId", nullable = false)
     private ForumPostModel postId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userIdFk", referencedColumnName = "userId", nullable = false)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userIdFk", referencedColumnName = "userId", nullable = false)
     private UserModel userId;
-    @Column
     private String message;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String createdDate;
-    public ForumCommentModel() {}
-
-    public Integer getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
-    }
-
-    public ForumPostModel getPostId() {
-        return postId;
-    }
-
-    public void setPostId(ForumPostModel postId) {
-        this.postId = postId;
-    }
-
-    public UserModel getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UserModel userId) {
-        this.userId = userId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
 }

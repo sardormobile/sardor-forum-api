@@ -20,8 +20,8 @@ public class ForumPostConverter {
     public ForumPostDTO toForumPostDTO(ForumPostModel model) {
         ForumPostDTO dto = new ForumPostDTO();
         dto.setPostId(model.getPostId());
-        dto.setUserId(model.getUserId().getUserId());
-        dto.setRole(model.getUserId().getRole());
+//        dto.setUserId(model.getUserId().getUserId());
+//        dto.setRole(model.getUserId().getRole());
         dto.setMessage(model.getMessage());
         dto.setCreatedDate(model.getCreatedDate());
         return dto;

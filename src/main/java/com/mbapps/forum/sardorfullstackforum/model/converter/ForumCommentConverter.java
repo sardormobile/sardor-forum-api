@@ -11,26 +11,26 @@ public class ForumCommentConverter {
     public ForumCommentModel toCommentEntity(ForumCommentDTO dto) {
         ForumCommentModel model = new ForumCommentModel();
         ForumPostModel postModel = new ForumPostModel();
-        postModel.setPostId(dto.getPostId());
+        postModel.setPostId(dto.getPostIdFk());
         model.setPostId(postModel);
 
         UserModel userModel = new UserModel();
-        userModel.setUserId(dto.getUserId());
+        userModel.setUserId(dto.getUserIdFk());
         model.setUserId(userModel);
 
-        model.setMessage(dto.getComment());
+        model.setMessage(dto.getMessage());
 //        model.setCreatedDate(dto.getCreatedDate());
         return model;
     }
     public ForumCommentDTO toCommentDTO(ForumCommentModel model) {
         ForumCommentDTO dto = new ForumCommentDTO();
         dto.setCommentId(model.getCommentId());
-        dto.setPostId(model.getPostId().getPostId());
-        dto.setUserId(model.getUserId().getUserId());
+        dto.setPostIdFk(model.getPostId().getPostId());
+        dto.setUserIdFk(model.getUserId().getUserId());
         dto.setRole(model.getUserId().getRole());
         dto.setFirstName(model.getUserId().getFirstName());
         dto.setUsername(model.getUserId().getUsername());
-        dto.setComment(model.getMessage());
+        dto.setMessage(model.getMessage());
         dto.setCreatedDate(model.getCreatedDate());
         return dto;
     }
