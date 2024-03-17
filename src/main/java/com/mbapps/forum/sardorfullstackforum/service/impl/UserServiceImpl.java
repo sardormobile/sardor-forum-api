@@ -1,6 +1,7 @@
 package com.mbapps.forum.sardorfullstackforum.service.impl;
 
 import com.mbapps.forum.sardorfullstackforum.enums.Role;
+import com.mbapps.forum.sardorfullstackforum.exceptions.DataNotFoundException;
 import com.mbapps.forum.sardorfullstackforum.model.connection.LogInDTO;
 import com.mbapps.forum.sardorfullstackforum.model.connection.UserDTO;
 import com.mbapps.forum.sardorfullstackforum.model.converter.UserConverter;
@@ -40,9 +41,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> signUp(UserModel user) { // signUp, new user
         //check username
         if (userRepository.existsByUsername(user.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Username already registered!");
+            throw new DataNotFoundException("Username already registered!, Id: " + user.getUsername());
         }
         UserModel newUser = new UserModel();
         BeanUtils.copyProperties(user, newUser);
@@ -62,8 +61,9 @@ public class UserServiceImpl implements UserService {
         int savedUser = userRepository.save(newUser);
         System.out.println("savedUser: " + savedUser);
         UserDTO resUserDto = userConverter.toUserDTO(newUser);
-        if (savedUser == 1) {
+        if (savedUser > 1) {
             resUserDto.setStatus(true);
+            resUserDto.setUserId(savedUser);
         }
         return new ResponseEntity<>(resUserDto, HttpStatus.CREATED);
     }

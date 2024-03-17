@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtValidationFilter, CorsFilter.class)
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth-> auth
-                        .requestMatchers( "register/**", "post/all**", "comment/all**").permitAll()
+                        .requestMatchers( "register/**", "post/all**", "comment/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

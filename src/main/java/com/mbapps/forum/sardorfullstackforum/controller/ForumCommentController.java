@@ -1,6 +1,8 @@
 package com.mbapps.forum.sardorfullstackforum.controller;
 
 import com.mbapps.forum.sardorfullstackforum.model.connection.ForumCommentDTO;
+import com.mbapps.forum.sardorfullstackforum.model.connection.ForumCommentResponse;
+import com.mbapps.forum.sardorfullstackforum.model.db.ForumCommentModel;
 import com.mbapps.forum.sardorfullstackforum.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +21,15 @@ public class ForumCommentController {
 
     private final CommentService commentService;
     @GetMapping("/all")
-    public ResponseEntity<List<ForumCommentDTO>> getAllComments() {
+    public ResponseEntity<List<ForumCommentResponse>> getAllComments() {
         return ResponseEntity.ok(commentService.getAllComments());
     }
     @GetMapping("/{postId}/all")
-    public ResponseEntity<List<ForumCommentDTO>> getAllCommentsByPostId(@PathVariable("postId") Integer postId) {
+    public ResponseEntity<List<ForumCommentResponse>> getAllCommentsByPostId(@PathVariable("postId") Integer postId) {
         return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
     }
     @PostMapping("/create")
-    public ResponseEntity<ForumCommentDTO> insertNewComment(@Validated @RequestBody ForumCommentDTO comment) {
+    public ResponseEntity<?> insertNewComment(@Validated @RequestBody ForumCommentModel comment) {
         return new ResponseEntity<>(commentService.createNewComment(comment), HttpStatus.CREATED);
     }
     @DeleteMapping("/delete/{commentId}")

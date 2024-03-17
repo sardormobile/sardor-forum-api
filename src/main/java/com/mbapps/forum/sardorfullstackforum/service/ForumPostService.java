@@ -9,7 +9,7 @@ import java.util.List;
 public interface ForumPostService {
     List<ForumPostDTO> getAllPosts();
 
-    ForumPostDTO createNewPost(ForumPostDTO post);
+    ResponseEntity<ForumPostDTO>  createNewPost(ForumPostDTO post);
 
     ResponseEntity<String> deletePostById(Integer postId);
 

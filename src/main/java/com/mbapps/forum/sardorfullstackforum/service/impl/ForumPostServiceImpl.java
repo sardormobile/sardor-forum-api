@@ -1,5 +1,6 @@
 package com.mbapps.forum.sardorfullstackforum.service.impl;
 
+import com.mbapps.forum.sardorfullstackforum.exceptions.DataNotFoundException;
 import com.mbapps.forum.sardorfullstackforum.model.connection.ForumPostDTO;
 import com.mbapps.forum.sardorfullstackforum.model.converter.ForumPostConverter;
 import com.mbapps.forum.sardorfullstackforum.model.db.ForumCommentModel;
@@ -49,30 +50,31 @@ public class ForumPostServiceImpl implements ForumPostService {
     }
 
     @Override
-    public ForumPostDTO createNewPost(ForumPostDTO post) {
+    public ResponseEntity<ForumPostDTO>  createNewPost(ForumPostDTO post) {
 
         String dateNaw = LocalDateTime.now().toString();
 
         ForumPostModel convertedForumData = forumPostConverter.toForumPostEntity(post);
         UserModel user = userRepository.findByUserId(post.getUserId());
         if (user == null) {
-            post.setErr_msg("User not found..!");
-            return post;
+            throw new DataNotFoundException(post.getPostId());
         }
         convertedForumData.setCreatedDate(dateNaw);
 
         int savedResult = forumPostRepository.save(convertedForumData);
         Integer commentsCount = commentRepository.getCommentsCountByPostId(post.getPostId());
 
-        if (savedResult == 1) {
+        if (savedResult > 0) {
             post.setStatus(true);
+            post.setPostId(savedResult);
             post.setRole(user.getRole());
             post.setFirstName(user.getFirstName());
             post.setUsername(user.getUsername());
             post.setCreatedDate(dateNaw);
             post.setCommentsCount(commentsCount);
+            return ResponseEntity.status(HttpStatus.CREATED).body(post);
         }
-        return post;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ForumPostController {
     }
     @PostMapping("/create")
     public ResponseEntity<ForumPostDTO> createNewPost(@RequestBody @Validated ForumPostDTO post) {
-        return new ResponseEntity<>(forumPostService.createNewPost(post), HttpStatus.CREATED);
+        return forumPostService.createNewPost(post);
     }
     @DeleteMapping("/delete/{postId}")
     public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId) {

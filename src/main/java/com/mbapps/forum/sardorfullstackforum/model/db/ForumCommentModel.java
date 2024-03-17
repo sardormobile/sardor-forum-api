@@ -4,6 +4,7 @@ package com.mbapps.forum.sardorfullstackforum.model.db;
 import lombok.*;
 
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -14,10 +15,10 @@ public class ForumCommentModel {
     private Integer commentId;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "postIdFk", referencedColumnName = "postId", nullable = false)
-    private ForumPostModel postId;
+    private Integer postId;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "userIdFk", referencedColumnName = "userId", nullable = false)
-    private UserModel userId;
+    private Integer userId;
     private String message;
 //    @Column(nullable = false)
     private String createdDate;

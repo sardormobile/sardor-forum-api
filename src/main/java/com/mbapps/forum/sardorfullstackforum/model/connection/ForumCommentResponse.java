@@ -11,13 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ForumCommentDTO {
+public class ForumCommentResponse {
     private Boolean status = false;
     private Integer commentId;
     @NotNull
-    private Integer postIdFk;
+    private Integer postId;
     @NotNull
-    private Integer userIdFk;
+    private Integer userId;
     private Role role;
     private String firstName;
     private String username;
