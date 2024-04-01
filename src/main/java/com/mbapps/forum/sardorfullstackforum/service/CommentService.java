@@ -8,9 +8,12 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CommentService {
-    List<ForumCommentResponse> getAllComments();
-    List<ForumCommentResponse> getCommentsByPostId(Integer postId);
-    ResponseEntity<?> createNewComment(ForumCommentModel comment);
-    void deleteCommentById(Integer id);
+  List<ForumCommentResponse> getAllComments();
+
+  List<ForumCommentResponse> getCommentsByPostId(Integer postId);
+
+  ResponseEntity<?> createNewComment(ForumCommentModel comment);
+
+  void deleteCommentById(Integer id);
 
 }

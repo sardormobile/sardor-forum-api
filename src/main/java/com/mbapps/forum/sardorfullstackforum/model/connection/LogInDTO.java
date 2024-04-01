@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LogInDTO {
-    private Boolean status = false;
-    private String username;
-    private String password;
+  private Boolean status = false;
+  private String username;
+  private String password;
 }

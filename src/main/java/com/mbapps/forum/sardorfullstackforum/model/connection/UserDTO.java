@@ -12,13 +12,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-    private Boolean status = false;
-    private Integer userId;
-    private Role role;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String token;
+  private Boolean status = false;
+  private Integer userId;
+  private Role role;
+  private String firstName;
+  private String lastName;
+  private String username;
+  private String token;
 
 }
 

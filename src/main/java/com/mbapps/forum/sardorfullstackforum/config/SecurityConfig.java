@@ -1,6 +1,7 @@
 package com.mbapps.forum.sardorfullstackforum.config;
 
 import com.mbapps.forum.sardorfullstackforum.filters.JwtValidationFilter;
+import com.mbapps.forum.sardorfullstackforum.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,8 @@ public class SecurityConfig {
 
     private final AuthExceptionHandler authExceptionHandler;
 
+//    private final UserService userService;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -35,7 +38,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://", "https://", "http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("http://", "https://", "http://localhost:4200", "http://localhost:10001"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization","content-type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -52,7 +55,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtValidationFilter, CorsFilter.class)
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth-> auth
-                        .requestMatchers( "register/**", "post/all**", "comment/**").permitAll()
+                        .requestMatchers( "register/**", "post/all**", "comment/**", "post/nav_item/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

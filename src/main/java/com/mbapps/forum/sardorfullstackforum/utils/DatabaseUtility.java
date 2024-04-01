@@ -12,25 +12,25 @@ import java.sql.PreparedStatement;
 @RequiredArgsConstructor
 public class DatabaseUtility {
 
-    private final JdbcTemplate jdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
-    public int insertAndRetrieveKey(String tableIdName, String sql, Object[] args) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        int rowsAffected = jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, new String[]{ tableIdName });
-            for (int i = 0; i < args.length; i++) {
-                ps.setObject(i + 1, args[i]);
-            }
-            return ps;
-        }, keyHolder);
+  public int insertAndRetrieveKey(String tableIdName, String sql, Object[] args) {
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    int rowsAffected = jdbcTemplate.update(connection -> {
+      PreparedStatement ps = connection.prepareStatement(sql, new String[]{tableIdName});
+      for (int i = 0; i < args.length; i++) {
+        ps.setObject(i + 1, args[i]);
+      }
+      return ps;
+    }, keyHolder);
 
-        if (rowsAffected == 1) {
-            Number generatedKey = keyHolder.getKey();
-            return generatedKey != null ? generatedKey.intValue() : -1;
-        } else {
-            return -1; // Insert failed
-        }
+    if (rowsAffected == 1) {
+      Number generatedKey = keyHolder.getKey();
+      return generatedKey != null ? generatedKey.intValue() : -1;
+    } else {
+      return -1; // Insert failed
     }
+  }
 }
 //KeyHolder keyHolder = new GeneratedKeyHolder();
 //int rowsAffected = jdbcTemplate.update(connection -> {

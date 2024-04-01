@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<CustomErrorResponseModel> handleAllExceptions(Exception ex, WebRequest request) {
-        CustomErrorResponseModel errorResponse = new CustomErrorResponseModel();
-        errorResponse.setTimestamp(LocalDateTime.now());
-        errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorResponse.setError("Internal Server Error");
-        errorResponse.setMessage(ex.getMessage());
-        errorResponse.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ExceptionHandler(Exception.class)
+  public final ResponseEntity<CustomErrorResponseModel> handleAllExceptions(Exception ex, WebRequest request) {
+    CustomErrorResponseModel errorResponse = new CustomErrorResponseModel();
+    errorResponse.setTimestamp(LocalDateTime.now());
+    errorResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    errorResponse.setError("Internal Server Error");
+    errorResponse.setMessage(ex.getMessage());
+    errorResponse.setPath(((ServletWebRequest) request).getRequest().getRequestURI());
+    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }

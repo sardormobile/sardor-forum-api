@@ -12,16 +12,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ForumCommentResponse {
-    private Boolean status = false;
-    private Integer commentId;
-    @NotNull
-    private Integer postId;
-    @NotNull
-    private Integer userId;
-    private Role role;
-    private String firstName;
-    private String username;
-    @NotNull
-    private String message;
-    private String createdDate;
+  private Boolean status = false;
+  private Integer commentId;
+  @NotNull
+  private Integer postId;
+  @NotNull
+  private Integer userId;
+  private Role role;
+  private String firstName;
+  private String username;
+  @NotNull
+  private String message;
+  private String createdDate;
 }

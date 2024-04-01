@@ -1,3 +1,13 @@
+server:
+  port: 8010
+  compression:
+    enabled: true
+    min-response-size: 128
+---
+jwt:
+  secret: "1j4u3d8nib4a1e4f05c8a0b3f267d8b1d4E6f3c8a9d2b5f8e3a9c8b5f6v8a3d9"
+  expiration: 86400000  # Token expiration time in milliseconds (e.g., 24 hours)
+---
 spring:
   jmx:
     enabled: false
@@ -13,7 +23,10 @@ spring:
       minimum-idle: 5
       pool-name: ForumPool
       leak-detection-threshold: 600000
-token:
-  signing:
-    key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
-
+---
+logging:
+  level:
+    org.springframework.security: info
+    org.springframework.web: info
+    com.zaxxer.hikari.HikariConfig: info
+    com.zaxxer.hikari.HikariDataSource: debug

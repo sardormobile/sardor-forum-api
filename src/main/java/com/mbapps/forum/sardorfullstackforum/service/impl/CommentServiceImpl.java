@@ -20,44 +20,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-    private final ForumCommentConverter forumCommentConverter;
+  private final ForumCommentConverter forumCommentConverter;
 
-    private final ForumCommentRepository commentRepository;
+  private final ForumCommentRepository commentRepository;
 
 
-    @Override
-    public List<ForumCommentResponse> getAllComments() {
-        List<ForumCommentDTO> getAllComments = commentRepository.findAll();
-        return getAllComments.stream()
-                .map(forumCommentConverter::toCommentResponse)//to change ..IdFk to ..Id
-                .collect(Collectors.toList());
+  @Override
+  public List<ForumCommentResponse> getAllComments() {
+    List<ForumCommentDTO> getAllComments = commentRepository.findAll();
+    return getAllComments.stream()
+        .map(forumCommentConverter::toCommentResponse)//to change ..IdFk to ..Id
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<ForumCommentResponse> getCommentsByPostId(Integer postId) {
+    List<ForumCommentDTO> allComments = commentRepository.findAllByPostId(postId);
+    return allComments.stream()
+        .map(forumCommentConverter::toCommentResponse)//to change ..IdFk to ..Id
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public ResponseEntity<ForumCommentDTO> createNewComment(ForumCommentModel comment) {
+    String dateNow = LocalDateTime.now().toString();
+    ForumCommentDTO forumCommentDTO = forumCommentConverter.toCommentDTO(comment);
+    comment.setCreatedDate(dateNow);
+    int savedResult = commentRepository.save(comment);
+    if (savedResult > 0) {
+      forumCommentDTO.setStatus(true);
+      forumCommentDTO.setCommentId(savedResult);
+      return ResponseEntity.status(HttpStatus.CREATED).body(forumCommentDTO);
     }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+  }
 
-    @Override
-    public List<ForumCommentResponse> getCommentsByPostId(Integer postId) {
-        List<ForumCommentDTO> allComments = commentRepository.findAllByPostId(postId);
-        return allComments.stream()
-                .map(forumCommentConverter::toCommentResponse)//to change ..IdFk to ..Id
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public ResponseEntity<ForumCommentDTO> createNewComment(ForumCommentModel comment) {
-        String dateNow = LocalDateTime.now().toString();
-        ForumCommentDTO forumCommentDTO = forumCommentConverter.toCommentDTO(comment);
-        comment.setCreatedDate(dateNow);
-        int savedResult = commentRepository.save(comment);
-        if (savedResult > 0) {
-            forumCommentDTO.setStatus(true);
-            forumCommentDTO.setCommentId(savedResult);
-            return ResponseEntity.status(HttpStatus.CREATED).body(forumCommentDTO);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
-
-    @Override
-    public void deleteCommentById(Integer id) {
-        commentRepository.deleteCommentById(id);
-    }
+  @Override
+  public void deleteCommentById(Integer id) {
+    commentRepository.deleteCommentById(id);
+  }
 
 }

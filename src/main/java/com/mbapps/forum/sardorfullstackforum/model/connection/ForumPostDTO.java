@@ -10,17 +10,18 @@ import lombok.*;
 @Getter
 @Setter
 public class ForumPostDTO {
-    private Boolean status = false;
-    private String err_msg;
-    private Integer postId;
-    @NotNull
-    private Integer userId;
-    private Role role;
-    private String firstName;
-    private String username;
-    @NotNull
-    private String message;
-    private String createdDate;
-    private Integer commentsCount;
+  private Boolean status = false;
+  private String err_msg;
+  private Integer postId;
+  private Integer topicIdFk;
+  @NotNull
+  private Integer userId;
+  private Role role;
+  private String firstName;
+  private String username;
+  @NotNull
+  private String message;
+  private String createdDate;
+  private Integer commentsCount;
 
 }

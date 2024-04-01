@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import java.text.ParseException;
 
 public interface JwtService {
-    String generateJwt(String username) throws ParseException;
-    UsernamePasswordAuthenticationToken validateJwt(String jwt);
+  String generateJwt(String username) throws ParseException;
+
+  UsernamePasswordAuthenticationToken validateJwt(String jwt);
 }

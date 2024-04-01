@@ -8,11 +8,12 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
 @Component
 public class AuthExceptionHandler implements AuthenticationEntryPoint {
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        System.err.println("Unauthorized {} in AuthExceptionHandler: " + authException.getMessage());
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User is not Authenticated");
-    }
+  @Override
+  public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    System.err.println("Unauthorized {} in AuthExceptionHandler: " + authException.getMessage());
+    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User is not Authenticated");
+  }
 }

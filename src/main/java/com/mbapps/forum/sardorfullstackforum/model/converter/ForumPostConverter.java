@@ -7,23 +7,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ForumPostConverter {
-    public ForumPostModel toForumPostEntity(ForumPostDTO dto) {
-        ForumPostModel newPost = new ForumPostModel();
-        UserModel user = new UserModel();
-        user.setUserId(dto.getUserId());
-        newPost.setUserId(user);
-        newPost.setMessage(dto.getMessage());
+  public ForumPostModel toForumPostEntity(ForumPostDTO dto) {
+    ForumPostModel newPost = new ForumPostModel();
+    UserModel user = new UserModel();
+    user.setUserId(dto.getUserId());
+    newPost.setTopicIdFk(dto.getTopicIdFk());
+    newPost.setUserId(user);
+    newPost.setMessage(dto.getMessage());
 //        newPost.setCreatedDate(dto.getCreatedDate());
-        return newPost;
-    }
+    return newPost;
+  }
 
-    public ForumPostDTO toForumPostDTO(ForumPostModel model) {
-        ForumPostDTO dto = new ForumPostDTO();
-        dto.setPostId(model.getPostId());
+  public ForumPostDTO toForumPostDTO(ForumPostModel model) {
+    ForumPostDTO dto = new ForumPostDTO();
+    dto.setPostId(model.getPostId());
+    dto.setTopicIdFk(model.getTopicIdFk());
 //        dto.setUserId(model.getUserId().getUserId());
 //        dto.setRole(model.getUserId().getRole());
-        dto.setMessage(model.getMessage());
-        dto.setCreatedDate(model.getCreatedDate());
-        return dto;
-    }
+    dto.setMessage(model.getMessage());
+    dto.setCreatedDate(model.getCreatedDate());
+    return dto;
+  }
 }

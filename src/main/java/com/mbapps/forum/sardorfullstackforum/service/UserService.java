@@ -8,12 +8,17 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface UserService {
-    ResponseEntity<?> signUp(UserModel user);
+  ResponseEntity<?> signUp(UserModel user);
 
-    ResponseEntity<?> logIn(LogInDTO user);//UserDTO
+  ResponseEntity<?> logIn(LogInDTO user);//UserDTO
 
-    ResponseEntity<?> getUserByUsername(String username);
-    List<UserDTO> getAllUsers();
+  ResponseEntity<?> getUserByUsername(String username);
+
+  List<UserDTO> getAllUsers();
+
+  int disableExpiredUsers(String jwtToken);
+
+  boolean isTokenExists(String jwtToken);
 
 
 }

@@ -19,26 +19,30 @@ import java.util.List;
 @RequestMapping("/register")//api/v1
 public class AuthController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@Validated @RequestBody UserModel user) {
-        return userService.signUp(user);
-    }
-    @PostMapping("/login")
-    public ResponseEntity<?> logIn(@Validated @RequestBody LogInDTO user) {
-        return userService.logIn(user);
-    }
-    @PostMapping("/admin")
-    public ResponseEntity<?> logInAsAdmin(@Validated @RequestBody LogInDTO user) {
-        return userService.logIn(user);
-    }
-    @GetMapping("/user/{username}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable("username") @RequestBody String username) {
-        return userService.getUserByUsername(username);
-    }
+  @GetMapping("/users")
+  public ResponseEntity<List<UserDTO>> getAllUsers() {
+    return ResponseEntity.ok(userService.getAllUsers());
+  }
+
+  @PostMapping("/signup")
+  public ResponseEntity<?> signUp(@Validated @RequestBody UserModel user) {
+    return userService.signUp(user);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<?> logIn(@Validated @RequestBody LogInDTO user) {
+    return userService.logIn(user);
+  }
+
+  @PostMapping("/admin")
+  public ResponseEntity<?> logInAsAdmin(@Validated @RequestBody LogInDTO user) {
+    return userService.logIn(user);
+  }
+
+  @GetMapping("/user/{username}")
+  public ResponseEntity<?> getUserByUsername(@PathVariable("username") @RequestBody String username) {
+    return userService.getUserByUsername(username);
+  }
 }

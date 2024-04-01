@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(DataNotFoundException.class)
-    public ResponseEntity<ErrorResponseModel> handleDataNotFoundException(DataNotFoundException ex) {
-        ErrorResponseModel errorResponse = new ErrorResponseModel(HttpStatus.NOT_FOUND.value(), ex.getMessage(), false);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
+  @ExceptionHandler(DataNotFoundException.class)
+  public ResponseEntity<ErrorResponseModel> handleDataNotFoundException(DataNotFoundException ex) {
+    ErrorResponseModel errorResponse = new ErrorResponseModel(HttpStatus.NOT_FOUND.value(), ex.getMessage(), false);
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+  }
 
 }
