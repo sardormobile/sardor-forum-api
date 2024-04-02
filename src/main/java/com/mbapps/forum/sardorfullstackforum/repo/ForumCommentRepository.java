@@ -32,7 +32,8 @@ public class ForumCommentRepository {
                FROM ForumComment c
                LEFT JOIN ForumUser u ON c.userIdFk = u.userId
                WHERE c.postIdFk = ?
-            """;
+               ORDER BY c.commentId ASC
+            """;//DESC //decreasing order
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ForumCommentDTO.class), postId);
   }
 
