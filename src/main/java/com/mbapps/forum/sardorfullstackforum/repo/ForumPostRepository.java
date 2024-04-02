@@ -31,12 +31,12 @@ public class ForumPostRepository {
   }
 
   public List<ForumPostDTO> findAll() {
-    String sql = "SELECT * FROM ForumPost LEFT JOIN ForumUser ON ForumPost.userIdFk = ForumUser.userId";
+    String sql = "SELECT * FROM ForumPost LEFT JOIN ForumUser ON ForumPost.userIdFk = ForumUser.userId ORDER BY postId ASC";
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ForumPostDTO.class));
   }
 
   public List<ForumPostDTO> findAllByTopicId(Integer id) {
-    String sql = "SELECT * FROM ForumPost LEFT JOIN ForumUser ON ForumPost.userIdFk = ForumUser.userId WHERE topicIdFk = ?";
+    String sql = "SELECT * FROM ForumPost LEFT JOIN ForumUser ON ForumPost.userIdFk = ForumUser.userId WHERE topicIdFk = ? ORDER BY postId ASC";
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ForumPostDTO.class), id);
   }
 
