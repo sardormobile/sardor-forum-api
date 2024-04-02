@@ -28,11 +28,11 @@ public class ForumCommentRepository {
   public List<ForumCommentDTO> findAllByPostId(Integer postId) {
     String sql =
         """
-             SELECT c.commentId, c.postIdFk, c.userIdFk, c.createdDate, u.role, u.firstName, u.username, c.message
-               FROM ForumComment c
-               LEFT JOIN ForumUser u ON c.userIdFk = u.userId
-               WHERE c.postIdFk = ?
-               ORDER BY c.commentId ASC
+              SELECT c.commentId, c.postIdFk, c.userIdFk, c.createdDate, u.role, u.firstName, u.username, c.message
+              FROM ForumComment c
+              LEFT JOIN ForumUser u ON c.userIdFk = u.userId
+              WHERE c.postIdFk = ?
+              ORDER BY c.commentId ASC
             """;//DESC //decreasing order
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ForumCommentDTO.class), postId);
   }
@@ -40,10 +40,10 @@ public class ForumCommentRepository {
   public List<ForumCommentDTO> findAll() {
     String sql =
         """
-            SELECT c.commentId, c.postIdFk, c.userIdFk, c.createdDate, u.role, u.firstName, u.username, c.message
-              FROM ForumComment c
-              LEFT JOIN ForumPost p ON c.postIdFk = p.postId
-              LEFT JOIN ForumUser u ON c.userIdFk = u.userId
+             SELECT c.commentId, c.postIdFk, c.userIdFk, c.createdDate, u.role, u.firstName, u.username, c.message
+             FROM ForumComment c
+             LEFT JOIN ForumPost p ON c.postIdFk = p.postId
+             LEFT JOIN ForumUser u ON c.userIdFk = u.userId
             """;
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ForumCommentDTO.class));
   }
