@@ -44,7 +44,7 @@ public class ForumPostController {
     return ResponseEntity.ok(forumPostService.getComments(postId));
   }
 
-  @PostMapping("/nav_item")
+  @PostMapping("/nav_item/create")
   public ResponseEntity<List<TopNavBarModel>> createNewNavBarItem(@RequestBody String name) {
     if (forumPostService.insertNewNavBarTitle(name) > 0) {
       return ResponseEntity.ok(forumPostService.getTopTabItems());
