@@ -58,9 +58,13 @@ public class ForumPostRepository {
     String sql = "SELECT DISTINCT topic FROM FORUMTABBAR";
     return jdbcTemplate.queryForList(sql, String.class);
   }
-  public List<TopNavBarModel> getTopTabItems() {
-    String sql = "SELECT * FROM FORUMTABBAR";
-    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TopNavBarModel.class));
+  public List<TopNavBarModel> getTopTabItemsByFirstHome(String homeName) {
+//    String sql = "SELECT * FROM FORUMTABBAR ORDER BY CASE WHEN topic = ? THEN 0 ELSE 1 END, topic";//sorting by alphabet
+    String sql = """
+      SELECT * FROM FORUMTABBAR WHERE topic = ? UNION ALL
+      SELECT * FROM FORUMTABBAR WHERE topic != ?
+      """;
+    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TopNavBarModel.class), homeName, homeName);
   }
   public int deleteByTitle(String title) {
     String sql = "DELETE FROM FORUMTABBAR WHERE topic = ?";

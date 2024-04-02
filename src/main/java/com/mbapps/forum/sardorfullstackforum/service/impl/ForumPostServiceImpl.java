@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +38,6 @@ public class ForumPostServiceImpl implements ForumPostService {
   @Override
   public List<ForumPostDTO> getAllPosts() {
     List<ForumPostDTO> posts = forumPostRepository.findAll();
-
     return posts.stream()
         .map(this::mapToForumPostDTO)
         .collect(Collectors.toList());
@@ -110,7 +110,12 @@ public class ForumPostServiceImpl implements ForumPostService {
 
   @Override
   public List<TopNavBarModel> getTopTabItems() {
-    return forumPostRepository.getTopTabItems();
+    String topicFirstItemName = "Home";
+    List<TopNavBarModel> topics = forumPostRepository.getTopTabItemsByFirstHome(topicFirstItemName);
+    if (topics.isEmpty() || !Objects.equals(topics.get(0).getTopic(), topicFirstItemName)) {
+      forumPostRepository.insertNewNavBarTitle(topicFirstItemName);
+    }
+    return forumPostRepository.getTopTabItemsByFirstHome(topicFirstItemName);
   }
 
   @Override

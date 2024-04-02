@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Data
 public class TopNavBarModel {
   private Number topicId;
   private String topic;
