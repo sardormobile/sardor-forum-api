@@ -18,7 +18,7 @@ public interface ForumPostService {
 
   List<TopNavBarModel> getTopTabItems();
 
-  int deleteByTitle(String title);
+  int deleteByTitleById(Integer titleId);
 
   int insertNewNavBarTitle(String title);
 }

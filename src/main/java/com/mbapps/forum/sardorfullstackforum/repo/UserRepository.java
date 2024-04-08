@@ -18,13 +18,12 @@ public class UserRepository {
   private final DatabaseUtility databaseUtility;
 
   public int save(UserModel user) {
-    String sql = "INSERT INTO ForumUser(firstName, lastName, username, password, token, role)  VALUES (?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO ForumUser(firstName, lastName, username, password, role)  VALUES (?, ?, ?, ?, ?)";
     Object[] args = {
         user.getFirstName(),
         user.getLastName(),
         user.getUsername(),
         user.getPassword(),
-        user.getToken(),
         user.getRole().name()
     };
     return databaseUtility.insertAndRetrieveKey("userId", sql, args);

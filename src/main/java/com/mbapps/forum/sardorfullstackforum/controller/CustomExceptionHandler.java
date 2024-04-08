@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-
   @ExceptionHandler(Exception.class)
   public final ResponseEntity<CustomErrorResponseModel> handleAllExceptions(Exception ex, WebRequest request) {
     CustomErrorResponseModel errorResponse = new CustomErrorResponseModel();

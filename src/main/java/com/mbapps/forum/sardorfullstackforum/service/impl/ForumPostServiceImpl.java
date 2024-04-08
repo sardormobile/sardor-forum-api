@@ -119,8 +119,8 @@ public class ForumPostServiceImpl implements ForumPostService {
   }
 
   @Override
-  public int deleteByTitle(String title) {
-    return forumPostRepository.deleteByTitle(title);
+  public int deleteByTitleById(Integer titleId) {
+    return forumPostRepository.deleteByTitleByTitleId(titleId);
   }
 
   @Override

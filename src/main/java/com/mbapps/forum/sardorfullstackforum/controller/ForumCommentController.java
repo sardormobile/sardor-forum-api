@@ -20,12 +20,10 @@ import java.util.List;
 public class ForumCommentController {
 
   private final CommentService commentService;
-
   @GetMapping("/all")
   public ResponseEntity<List<ForumCommentResponse>> getAllComments() {
     return ResponseEntity.ok(commentService.getAllComments());
   }
-
   @GetMapping("/{postId}/all")
   public ResponseEntity<List<ForumCommentResponse>> getAllCommentsByPostId(@PathVariable("postId") Integer postId) {
     return ResponseEntity.ok(commentService.getCommentsByPostId(postId));

@@ -72,9 +72,9 @@ public class ForumPostRepository {
     return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TopNavBarModel.class), homeName, homeName);
   }
 
-  public int deleteByTitle(String title) {
-    String sql = "DELETE FROM FORUMTABBAR WHERE topic = ?";
-    return jdbcTemplate.update(sql, title);
+  public int deleteByTitleByTitleId(Integer titleId) {
+    String sql = "DELETE FROM FORUMTABBAR WHERE topicId = ?";
+    return jdbcTemplate.update(sql, titleId);
   }
 
   public int insertNewNavBarTitle(String title) {

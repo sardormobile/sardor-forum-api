@@ -58,10 +58,10 @@ public class ForumPostController {
   }
 
   @DeleteMapping("/nav_item/{index}")
-  public ResponseEntity<?> deleteNavBarItem(@PathVariable("index") String title) {
-    if (forumPostService.deleteByTitle(title) > 0) {
+  public ResponseEntity<?> deleteNavBarItem(@PathVariable("index") Integer titleId) {
+    if (forumPostService.deleteByTitleById(titleId) > 0) {
       TopNavBarModel topNavBarModel = new TopNavBarModel();
-      topNavBarModel.setTopic(title);
+      topNavBarModel.setTopicId(titleId);
       return ResponseEntity.ok(topNavBarModel);
     }
     return ResponseEntity.notFound().build();
